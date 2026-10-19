@@ -1,9 +1,11 @@
 
-
 name: Prepara libreria Web Push PHP 8.4
 
-on:
+'on':
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
