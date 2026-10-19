@@ -1,0 +1,27 @@
+
+name: Genera chiavi VAPID
+
+'on':
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scarica repository
+        uses: actions/checkout@v4
+
+      - name: Configura PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: openssl, mbstring, curl
+          tools: composer:v2
+
+      - name: Installa libreria Web Push
+        run: composer install --no-dev --prefer-dist --no-interaction
+
+      - name: Genera chiavi VAPID
+        run: |
+          php -r 'require "vendor/autoload.php"; $keys = \Minishlink\WebPush\VAPID::createVapidKeys(); echo "PUBLIC_KEY=".$keys["publicKey"].PHP_EOL; echo "::add-mask::".$keys["privateKey"].PHP_EOL;'
