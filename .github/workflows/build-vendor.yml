@@ -1,1 +1,33 @@
 
+
+name: Prepara libreria Web Push PHP 8.4
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scarica repository
+        uses: actions/checkout@v4
+
+      - name: Configura PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, mbstring, openssl
+          tools: composer:v2
+
+      - name: Installa dipendenze
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+
+      - name: Crea archivio vendor
+        run: zip -r vendor.zip vendor/
+
+      - name: Rendi disponibile il download
+        uses: actions/upload-artifact@v4
+        with:
+          name: carburante-vendor-php84
+          path: vendor.zip
