@@ -1,0 +1,9 @@
+
+{
+  "name": "loffredoapps/carburante-smart-push",
+  "description": "Dipendenze notifiche push Carburante Smart",
+  "require": {
+    "php": "^8.4",
+    "minishlink/web-push": "^9.0"
+  }
+}
